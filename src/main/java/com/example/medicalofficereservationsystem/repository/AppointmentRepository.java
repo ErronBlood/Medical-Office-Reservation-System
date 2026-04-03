@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -43,4 +45,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             "WHERE (a.status = CANCELLED OR a.status = NO_SHOW) AND d.specialty.id = :specialtyId")
     Long amountOfCanceledOrNoShowAppointmentBySpecialty(@Param("specialtyId") Long specialtyId);
 
+    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND " +
+            "CAST(a.startAt as localdate) = :date AND a.status != CANCELLED")
+    List<Appointment> findByDoctorAndDate(@Param("doctorId") Long doctorId,
+                                          @Param("date") LocalDateTime date);
 }
