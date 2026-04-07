@@ -72,8 +72,8 @@ public class DoctorScheduleRepositoryTest extends AbstractRepositoryTest {
 
         saveSchedule(doctor, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(12, 0));
 
-        Optional<DoctorSchedule> result = doctorScheduleRepository.findByDayOfWeekAndDoctor(DayOfWeek.MONDAY, doctor);
-
+        Optional<DoctorSchedule> result = doctorScheduleRepository
+                .findByDayOfWeekAndDoctor_Id(DayOfWeek.MONDAY, doctor.getId());
 
         assertThat(result).isPresent();
         assertThat(result.get().getDayOfWeek()).isEqualTo(DayOfWeek.MONDAY);
@@ -88,7 +88,8 @@ public class DoctorScheduleRepositoryTest extends AbstractRepositoryTest {
 
         saveSchedule(doctor, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(12, 0));
 
-        Optional<DoctorSchedule> result = doctorScheduleRepository.findByDayOfWeekAndDoctor(DayOfWeek.TUESDAY, doctor);
+        Optional<DoctorSchedule> result = doctorScheduleRepository
+                .findByDayOfWeekAndDoctor_Id(DayOfWeek.TUESDAY, doctor.getId());
 
         assertThat(result).isEmpty();
     }
@@ -99,7 +100,8 @@ public class DoctorScheduleRepositoryTest extends AbstractRepositoryTest {
 
         saveSchedule(doctor2, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(13, 0));
 
-        Optional<DoctorSchedule> result = doctorScheduleRepository.findByDayOfWeekAndDoctor(DayOfWeek.MONDAY, doctor);
+        Optional<DoctorSchedule> result = doctorScheduleRepository
+                .findByDayOfWeekAndDoctor_Id(DayOfWeek.TUESDAY, doctor.getId());
 
         assertThat(result).isEmpty();
     }
